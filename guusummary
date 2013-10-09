@@ -1,15 +1,191 @@
-\c|git config \a|Variable [Value]|a\|c\:
-  Set configuration \a|Variable|a\ to \a|Value|a\(Default displaying current value).
-  Option:
-    Location:
-      Default, \o|--local|o\:
-        Local.
-        Stored at \f|.git/config|f\ in working directory.
-      \o|--global|o\:
-        Global for current user.
-        Stored at \f|~/.gitconfig|f\.
-      \o|--system|o\:
-        Global for all users.
-        Stored at \f|/etc/gitconfig|f\.
-      \o|-f \a|File|a\|o\, \o|--file \a|File|a\|o\:
-        Use \a|File|a\.
+Configuration:
+  \c|git config \a|Variable [Value]|a\|c\:
+    Set \a|Variable|a\ to \a|Value|a\(Default displaying current value).
+    Option***:
+      Location:
+        Default, \o|--local|o\:
+          Local.
+          Stored at \f|.git/config|f\ in working directory.
+        \o|--global|o\:
+          Global for current user.
+          Stored at \f|~/.gitconfig|f\.
+        \o|--system|o\:
+          Global for all users.
+          Stored at \f|/etc/gitconfig|f\.
+        \o|-f \a|File|a\|o\, \o|--file \a|File|a\|o\:
+          Use \a|File|a\.
+    Variable***:
+      \i|user.name|i\, \i|user.email|i\.
+      \i|core.editor|i\.
+      \i|merge.tool|i\.
+      \i|diff.tool|i\.
+      \i|format.pretty|i\.
+      \i|alias.\a|Alias|a\|i\.
+        Command can be a string starting with \s|!|s\ for an external command.
+  \f|.gitignore|f\:
+    File ignored.
+    Glob pattern acceptable.
+    Directory with trailing \s|/|s\.
+    Leading \s|!|s\ negates a file.
+    \s|#|s\ comments a line.
+
+Initialization:
+  \c|git init|c\:
+    Local directory.
+  \c|git clone \a|Link [Directory]|a\|c\:
+    Clone from \a|Link|a\ to \a|Directory|a\.
+
+Status:
+  \c|git status|c\:
+    Display status.
+  \c|git add \a|File ...|a\|c\:
+    Stage \a|File|a\.
+  \c|git rm \a|File ...|a\|c\:
+    Remove tracked \a|File|a\.
+    Option***:
+      \o|-f|o\, \o|--force|o\:
+        Override up-to-date check.
+      \o|--cached|o\:
+        Only remove from index.
+  \c|git mv \a|File1 File2|a\|c\:
+    Move \a|File1|a\ to \a|File2|a\.
+  \c|git commit|c\:
+    Commit.
+    Option***:
+      \o|-a|o\, \o|--all|o\:
+        Commit all tracked files by skipping staging.
+      \o|-m \a|String|a\|o\.
+        \a|String|a\ as commit message.
+      \o|-v|o\, \o|--verbose|o\:
+        Difference information.
+        Not included in commit message.
+      \o|--amend|o\:
+        Overwrite latest commit.
+
+Difference:
+  \c|git diff|c\:
+    Default difference between modified and staged files.
+    Option***:
+      \o|--cached|o\, \o|--staged|o\:
+        Difference between staged and committed files.
+
+History:
+  \c|git log \a|[Since|a\..\a|Until] [File]|a\|c\:
+    Commit history of \a|File|a\(Default whole directory) between commit \a|Since|a\ and \a|Until|a\(Default all).
+    A default \a|Since|a\ or \a|Until|a\ is HEAD.
+    Option***:
+      Range:
+        \o|-\a|Num|a\|o\:
+          Last \a|Num|a\.
+        \o|--since=\a|Date|a\|o\, \o|--after=\a|Date|a\|o\.
+        \o|--until=\a|Date|a\|o\, \o|--before=\a|Date|a\|o\.
+      Filter:
+        \o|--author=\a|Regexp|a\|o\, \o|--committer=\a|Regexp|a\|o\.
+        \o|--grep=\a|Regexp|a\|o\:
+          Match in commit message.
+        \o|--min-parents=\a|Num|a\|o\, \o|--max-parents=\a|Num|a\|o\:
+          Constraint on number of parents.
+          \o|--no-min-parents|o\:
+            \o|--min-parents=1|o\.
+          \o|--no-max-parents|o\:
+            \o|--max-parents=-1|o\.
+          \o|--merges|o\:
+            \o|--min-parents=2|o\.
+          \o|--no-merges|o\:
+            \o|--max-parents=1|o\.
+        \o|--all-match|o\:
+          Display result matching all constraints instead of one of them.
+      Format:
+        \o|--pretty=\a|Format|a\|o\:
+          \a|Format|a\:
+            \i|oneline|i\, \i|short|i\, \i|medium|i\(Default unless \i|format.pretty|i\ is set), \i|full|i\, \i|fuller|i\, \i|email|i\, \i|raw|i\, \i|format:\a|Format|a\|i\, \i|tformat:\a|Format|a\|i\.
+          \o|--oneline|o\:
+            Short for \o|--pretty=oneline|o\.
+      Difference:
+        \o|-p|o\, \o|-u|o\, \o|--patch|o\:
+          Patch.
+        \o|--stat\a|[|a\=\a|[Num1],[Num2],[Num3]]|a\|o\:
+          Difference stat.
+          \a|Num1|a\ is terminal width.  Can be set by \o|--stat-width|o\.
+          \a|Num2|a\ is filename width.  Can be set by \o|--stat-name-width|o\.
+          \a|Num3|a\ is number of lines to display.  Can be set by \o|--stat-count|o\.
+          \o|--shortstat|o\:
+            Only last line.
+          \o|--numstat|o\:
+            Number format for machine.
+          \o|--stat-graph-width=\a|Num|a\|o\:
+            Set graph-stat width.
+        \o|--name-only|o\:
+          Only names of changed files.
+        \o|--name-status|o\:
+          Names and modifying status of changed files.
+      Graph:
+        \o|--graph|o\:
+          Graphical structure on left.
+      Date:
+        \o|--date=\a|Format|a\|o\:
+          \i|default|i\:
+            Original time-zone.
+          \i|local|i\:
+            User's time-zone.
+          \i|relative|i\, \o|--relative-date|o\:
+            Relative time.
+          \i|short|i\:
+            No time, only date.
+          \i|raw|i\, \i|iso|i\, \i|rfc|i\.
+      SHA-1:
+        \o|--abbrev-commit|o\, \o|--no-abbrev-commit|o\:
+          Do or not abbreviate SHA-1.
+          \o|--abbrev=\a|Num|a\|o\:
+            Width of abbreviation.
+
+Tag:
+  \c|git tag|c\:
+    List all tags.
+    \o|-l \a|Pattern ...|a\|o\, \o|--list \a|Pattern ...|a\|o\
+  \c|git tag \a|Tag [Commit]|a\|c\:
+    Add lightweight \a|Tag|a\ to \a|Commit|a\(Default HEAD).
+    Option***:
+        List tags matching any of \a|Pattern|a\.
+        Wildcard available.
+      \o|-a|o\, \o|--annotate|o\:
+        Annotated tag.
+      \o|-u \a|Key|a\|o\, \o|--local-user=\a|Key|a\|o\:
+        GPG-signed tag with \a|Key|a\.
+        \o|-s|o\, \o|--sign|o\:
+          Default email address's key.
+      \o|-m \a|Message|a\|o\, \o|-message=\a|Message|a\|o\:
+        Tag message.
+        Concatenate all messages.
+        Imply \o|-a|o\ with no \o|-u|o\,\o|-s|o\ given.
+      \o|-v|o\, \o|--verify|o\:
+        Verify signature.
+
+Remote:
+  \c|git remote|c\:
+    Display remotes.
+    \o|-v|o\, \o|--verbose|o\:
+      Display remote URL.
+      Available for following commands but must directly after \s|remote|s\.
+  \c|git remote show \a|Remote|a\|c\:
+    Information of \a|Remote|a\.
+  \c|git remote add \a|Remote URL|a\|c\.
+    Add remote \a|URL|a\ as \a|Remote|a\.
+  \c|git remote rm \a|Remote|a\|c\:
+    Remove \a|Remote|a\.
+  \c|git remote rename \a|Old New|a\|c\:
+    Remove \a|Old|a\ to \a|New|a\.
+  \c|git fetch \a|[Remote]|a\|c\:
+    Fetch from \a|Remote|a\(Default \s|origin|s\).
+    \c|git pull \a|[Remote]|a\|c\:
+      Fetch and automatically merge branches indicated by \c|git remote show|c\.
+  \c|git push \a|Remote [Branch]|a\|c\:
+    Push \a|Branch|a\ onto \a|Remote|a\.
+    Default \a|Branch|a\ is indicated by \c|git remote show|c\.
+    \c|git push \a|Remote [Branch]|a\|c\:
+      Push \a|Tag|a\, which is by default ignored.
+      \o|--tags|o\:
+        Push all tags.
+
+Information:
+  \c|git show \a|Object|a\|c\.
