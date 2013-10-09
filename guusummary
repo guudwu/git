@@ -1,0 +1,15 @@
+\c|git config \a|Variable [Value]|a\|c\:
+  Set configuration \a|Variable|a\ to \a|Value|a\(Default displaying current value).
+  Option:
+    Location:
+      Default, \o|--local|o\:
+        Local.
+        Stored at \f|.git/config|f\ in working directory.
+      \o|--global|o\:
+        Global for current user.
+        Stored at \f|~/.gitconfig|f\.
+      \o|--system|o\:
+        Global for all users.
+        Stored at \f|/etc/gitconfig|f\.
+      \o|-f \a|File|a\|o\, \o|--file \a|File|a\|o\:
+        Use \a|File|a\.
